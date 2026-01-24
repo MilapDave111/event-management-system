@@ -15,7 +15,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          React1
+          jAVASCRIPT
         </a>
       </header>
     </div>

@@ -1,10 +1,16 @@
 import React, { useState } from "react";
-import "../assets/css/AuthStyles.css";
-import api from "../services/api";
+import "../styles/AuthStyles.css";
 import toast from "react-hot-toast";
+import { useAuth } from "../../model/auth/auth.context";
+
+import {
+  loginUser,
+  registerUser,
+} from "../../controller/auth/auth.controller";
 
 const AuthPage = () => {
   const [isSignUpMode, setIsSignUpMode] = useState(false);
+const { login } = useAuth();
 
   // Login state
   const [loginEmail, setLoginEmail] = useState("");
@@ -16,47 +22,46 @@ const AuthPage = () => {
   const [regPassword, setRegPassword] = useState("");
   const [isRegistering, setIsRegistering] = useState(false);
 
-  /* ---------------- LOGIN ---------------- */
+  /* ---------------- LOGIN (VIEW → CONTROLLER) ---------------- */
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await api.post("/auth/login", {
+      const data = await loginUser({
         email: loginEmail,
         password: loginPassword,
       });
 
-      localStorage.setItem("token", res.data.token);
-      toast.success("Logged in successfully");
-    } catch (err) {
-      toast.error(err.response?.data?.message || "Login failed");
+      // TEMP storage (AuthContext will replace this later)
+      login({
+  token: data.token,
+  user: data.user,
+});
+toast.success("Logged in successfully");
+ } catch (err) {
+      toast.error(err.response?.data?.message || err.message);
     }
   };
 
-  /* ---------------- REGISTER ---------------- */
+  /* ---------------- REGISTER (VIEW → CONTROLLER) ---------------- */
   const handleRegister = async (e) => {
     e.preventDefault();
-
-    if (regPassword.length < 6) {
-      toast.error("Password must be at least 6 characters");
-      return;
-    }
-
     setIsRegistering(true);
 
     try {
-      await api.post("/auth/register", {
-        full_name: regName,     // ✅ SOEMS FIELD
+      await registerUser({
+        full_name: regName,
         email: regEmail,
         password: regPassword,
       });
 
-      toast.success("Registration successful. Please log in.");
+      toast.success("Registration successful. Please verify your email.");
+
       setIsSignUpMode(false);
       setRegName("");
       setRegEmail("");
       setRegPassword("");
     } catch (err) {
-      toast.error(err.response?.data?.message || "Registration failed");
+      toast.error(err.response?.data?.message || err.message);
     } finally {
       setIsRegistering(false);
     }
@@ -187,11 +192,10 @@ const AuthPage = () => {
             <p>Create your account and start managing events.</p>
           </div>
           <img
-  src="/img/register.svg"
-  className="image"
-  alt="register"
-/>
-
+            src="/img/register.svg"
+            className="image"
+            alt="register"
+          />
         </div>
       </div>
     </div>

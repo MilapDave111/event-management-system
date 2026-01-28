@@ -1,10 +1,18 @@
 import React, { useState } from "react";
-import "../assets/css/AuthStyles.css";
-import api from "../services/api";
+import "../styles/AuthStyles.css";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../model/auth/auth.context";
+
+import {
+  loginUser,
+  registerUser,
+} from "../../controller/auth/auth.controller";
 
 const AuthPage = () => {
   const [isSignUpMode, setIsSignUpMode] = useState(false);
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   // Login state
   const [loginEmail, setLoginEmail] = useState("");
@@ -20,43 +28,54 @@ const AuthPage = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await api.post("/auth/login", {
+      const data = await loginUser({
         email: loginEmail,
         password: loginPassword,
       });
 
-      localStorage.setItem("token", res.data.token);
+      // Store in AuthContext (MODEL)
+      login({
+        token: data.token,
+        user: data.user,
+      });
+
       toast.success("Logged in successfully");
+
+      // 🔀 ROLE-BASED REDIRECT
+      if (data.user.role === "USER") {
+        navigate("/dashboard/user");
+      } else if (data.user.role === "ORG_ADMIN") {
+        navigate("/dashboard/org-admin");
+      } else if (data.user.role === "SUPER_ADMIN") {
+        navigate("/dashboard/super-admin");
+      } else {
+        navigate("/unauthorized");
+      }
     } catch (err) {
-      toast.error(err.response?.data?.message || "Login failed");
+      toast.error(err.response?.data?.message || err.message);
     }
   };
 
   /* ---------------- REGISTER ---------------- */
   const handleRegister = async (e) => {
     e.preventDefault();
-
-    if (regPassword.length < 6) {
-      toast.error("Password must be at least 6 characters");
-      return;
-    }
-
     setIsRegistering(true);
 
     try {
-      await api.post("/auth/register", {
-        full_name: regName,     // ✅ SOEMS FIELD
+      await registerUser({
+        full_name: regName,
         email: regEmail,
         password: regPassword,
       });
 
-      toast.success("Registration successful. Please log in.");
+      toast.success("Registration successful. Please verify your email.");
+
       setIsSignUpMode(false);
       setRegName("");
       setRegEmail("");
       setRegPassword("");
     } catch (err) {
-      toast.error(err.response?.data?.message || "Registration failed");
+      toast.error(err.response?.data?.message || err.message);
     } finally {
       setIsRegistering(false);
     }
@@ -187,11 +206,10 @@ const AuthPage = () => {
             <p>Create your account and start managing events.</p>
           </div>
           <img
-  src="/img/register.svg"
-  className="image"
-  alt="register"
-/>
-
+            src="/img/register.svg"
+            className="image"
+            alt="register"
+          />
         </div>
       </div>
     </div>
@@ -199,3 +217,4 @@ const AuthPage = () => {
 };
 
 export default AuthPage;
+

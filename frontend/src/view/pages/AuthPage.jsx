@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../styles/AuthStyles.css";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../model/auth/auth.context";
 
 import {
@@ -10,7 +11,8 @@ import {
 
 const AuthPage = () => {
   const [isSignUpMode, setIsSignUpMode] = useState(false);
-const { login } = useAuth();
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   // Login state
   const [loginEmail, setLoginEmail] = useState("");
@@ -22,7 +24,7 @@ const { login } = useAuth();
   const [regPassword, setRegPassword] = useState("");
   const [isRegistering, setIsRegistering] = useState(false);
 
-  /* ---------------- LOGIN (VIEW → CONTROLLER) ---------------- */
+  /* ---------------- LOGIN ---------------- */
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -31,18 +33,30 @@ const { login } = useAuth();
         password: loginPassword,
       });
 
-      // TEMP storage (AuthContext will replace this later)
+      // Store in AuthContext (MODEL)
       login({
-  token: data.token,
-  user: data.user,
-});
-toast.success("Logged in successfully");
- } catch (err) {
+        token: data.token,
+        user: data.user,
+      });
+
+      toast.success("Logged in successfully");
+
+      // 🔀 ROLE-BASED REDIRECT
+      if (data.user.role === "USER") {
+        navigate("/dashboard/user");
+      } else if (data.user.role === "ORG_ADMIN") {
+        navigate("/dashboard/org-admin");
+      } else if (data.user.role === "SUPER_ADMIN") {
+        navigate("/dashboard/super-admin");
+      } else {
+        navigate("/unauthorized");
+      }
+    } catch (err) {
       toast.error(err.response?.data?.message || err.message);
     }
   };
 
-  /* ---------------- REGISTER (VIEW → CONTROLLER) ---------------- */
+  /* ---------------- REGISTER ---------------- */
   const handleRegister = async (e) => {
     e.preventDefault();
     setIsRegistering(true);
@@ -203,3 +217,4 @@ toast.success("Logged in successfully");
 };
 
 export default AuthPage;
+

@@ -1,5 +1,7 @@
+<<<<<<< HEAD
 -- 1. Setup Extensions & Functions for Auto-Timestamps
 CREATE OR REPLACE FUNCTION update_timestamp()
+
 RETURNS TRIGGER AS $$
 BEGIN
     NEW.updated_at = NOW();
@@ -7,6 +9,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+<<<<<<< HEAD
 -- 2. Organizations Table (PDF Feature 1.2)
 CREATE TABLE IF NOT EXISTS organizations (
     id SERIAL PRIMARY KEY,
@@ -47,3 +50,4 @@ CREATE TRIGGER trg_update_org_time BEFORE UPDATE ON organizations FOR EACH ROW E
 
 DROP TRIGGER IF EXISTS trg_update_user_time ON users;
 CREATE TRIGGER trg_update_user_time BEFORE UPDATE ON users FOR EACH ROW EXECUTE FUNCTION update_timestamp();
+

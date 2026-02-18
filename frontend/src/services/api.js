@@ -7,6 +7,7 @@ const api = axios.create({
   },
 });
 
+
 // CRITICAL: Attach the token to every request automatically
 api.interceptors.request.use(
   (config) => {
@@ -22,3 +23,4 @@ api.interceptors.request.use(
 );
 
 export default api;
+

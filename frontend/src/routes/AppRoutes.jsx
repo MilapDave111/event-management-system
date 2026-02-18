@@ -1,4 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+
 import ProtectedRoute from "../controller/auth/ProtectedRoute";
 import RoleProtectedRoute from "../controller/auth/RoleProtectedRoute";
 
@@ -17,9 +18,13 @@ import UserDashboard from "../view/dashboard/UserDashboard";
 /* LAYOUT */
 import MainLayout from "../view/layout/MainLayout";
 
+
+
+
 const AppRoutes = () => {
   return (
     <Routes>
+
       <Route path="/auth" element={<AuthPage />} />
 
       {/* SUPER ADMIN ROUTES */}
@@ -50,8 +55,11 @@ const AppRoutes = () => {
       } />
 
       <Route path="/" element={<Navigate to="/auth" replace />} />
+
     </Routes>
   );
 };
 
+
 export default AppRoutes;
+

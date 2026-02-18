@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 
 const authRoutes = require("./src/routes/auth.routes");
+
 const organizationRoutes = require("./src/routes/organizationRoutes");
 const userRoutes = require("./src/routes/userRoutes"); // New Import
 const eventRoutes = require("./src/routes/eventRoutes");
@@ -18,3 +19,4 @@ app.use("/api/users", userRoutes); // New Route Registration
 app.use("/api/events", eventRoutes);
 
 module.exports = app;
+

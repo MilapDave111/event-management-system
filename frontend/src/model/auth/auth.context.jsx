@@ -3,10 +3,12 @@ import { createContext, useContext, useEffect, useState } from "react";
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
+
   // Initialize state directly from localStorage to prevent "flash" logout on refresh
   const [token, setToken] = useState(localStorage.getItem("token") || null);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")) || null);
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem("token"));
+
 
   const login = ({ token, user }) => {
     localStorage.setItem("token", token);
@@ -42,3 +44,4 @@ export const AuthProvider = ({ children }) => {
 };
 
 export const useAuth = () => useContext(AuthContext);
+

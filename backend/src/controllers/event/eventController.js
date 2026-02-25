@@ -55,7 +55,7 @@ const getMyEvents = async (req, res) => {
 const createEvent = async (req, res) => {
   try {
     const event = await eventService.createEvent(req.user, req.body);
-    res.status(201).json(event); // Keep same response structure
+    res.status(201).json(event);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -71,6 +71,25 @@ const getAllApprovedEvents = async (req, res) => {
   }
 };
 
+const handleEventLifecycle = async (req, res) => {
+  try {
+    const { action, eventId } = req.body;
+    const result = await eventService.handleLifecycle(req.user, action, eventId);
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const updateEvent = async (req, res) => {
+  try {
+    const { id } = req.params; // Extracts the "11" from /api/events/11
+    const event = await eventService.updateEvent(req.user, id, req.body);
+    res.status(200).json(event);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 module.exports = { 
   getAllEventsForModeration, 
@@ -78,5 +97,7 @@ module.exports = {
   getOrgStats, 
   getMyEvents, 
   createEvent,
-  getAllApprovedEvents // MUST BE HERE
+  getAllApprovedEvents ,
+  handleEventLifecycle,
+  updateEvent
 };

@@ -1,8 +1,8 @@
 const eventModel = require("../../model/event/event.model");
-
-
+const pool = require("../../config/db");
 /**
  * Create Event (ORG_ADMIN)
+ * Supports 'Save as Draft' and 'Submit for Approval' logic.
  */
 const createEvent = async (user, body) => {
   if (!user) {
@@ -24,7 +24,9 @@ const createEvent = async (user, body) => {
     event_type,
     event_subtype,
     scope,
-    poster_url
+    poster_url,
+    status = "draft", // Default to 'draft' per management requirements
+    event_manager_id = null
   } = body;
 
   if (!title || !event_date) {
@@ -48,6 +50,7 @@ const createEvent = async (user, body) => {
     throw new Error("Capacity must be greater than 0");
   }
 
+  // Strategic Authority: If no manager assigned, the Org Admin is the authority
   return await eventModel.insertEvent({
     org_id: user.organization_id,
     title,
@@ -57,14 +60,41 @@ const createEvent = async (user, body) => {
     capacity,
     start_datetime: derivedStart,
     end_datetime: derivedEnd,
-    status: "pending",
+    status: status, // Supports transitions like 'draft' or 'pending'
     event_type,
     event_subtype,
     scope,
-    poster_url
+    poster_url,
+    event_manager_id: event_manager_id || null 
   });
 };
 
+/**
+ * Lifecycle Router (ORG_ADMIN)
+ * Handles Soft Delete, Restore, Archive, and Clone actions.
+ */
+const handleLifecycle = async (user, action, eventId) => {
+  if (!user || user.role !== "ORG_ADMIN") {
+    throw new Error("Unauthorized");
+  }
+
+  if (!eventId || !action) {
+    throw new Error("Event ID and action are required");
+  }
+
+  switch (action) {
+    case 'delete':
+      return await eventModel.softDeleteEvent(eventId);
+    case 'restore':
+      return await eventModel.restoreEvent(eventId);
+    case 'archive':
+      return await eventModel.archiveEvent(eventId);
+    case 'clone':
+      return await eventModel.cloneEvent(eventId);
+    default:
+      throw new Error("Invalid Lifecycle Action");
+  }
+};
 
 /**
  * Get Events for ORG_ADMIN
@@ -76,6 +106,7 @@ const getMyEvents = async (user) => {
 
     return await eventModel.getEventsByOrg(user.organization_id);
 };
+
 /**
  * Get Moderation Queue (SUPER_ADMIN)
  */
@@ -107,12 +138,14 @@ const moderateEvent = async (user, body) => {
         rejection_reason
     );
 };
+
 /**
  * Get Approved Events (Public/User)
  */
 const getApprovedEvents = async () => {
     return await eventModel.getApprovedEvents();
 };
+
 /**
  * Register for Event
  */
@@ -139,16 +172,56 @@ const getMyRegistrations = async (user) => {
     return await eventModel.getUserRegistrations(user.id);
 };
 
+const updateEvent = async (user, eventId, updateData) => {
+  const query = `
+    UPDATE events 
+    SET title = $1, 
+        description = $2, 
+        event_type = $3, 
+        event_subtype = $4, 
+        scope = $5, 
+        location = $6, 
+        capacity = $7, 
+        poster_url = $8, 
+        event_date = $9, 
+        start_datetime = $10, 
+        end_datetime = $11, 
+        status = $12, -- ENSURE STATUS IS INCLUDED
+        updated_at = NOW()
+    WHERE id = $13 AND org_id = $14
+    RETURNING *;
+  `;
+
+  const values = [
+    updateData.title,
+    updateData.description,
+    updateData.event_type,
+    updateData.event_subtype,
+    updateData.scope,
+    updateData.location,
+    updateData.capacity,
+    updateData.poster_url,
+    updateData.event_date,
+    updateData.start_datetime,
+    updateData.end_datetime,
+    updateData.status, // New status ('pending' or 'draft')
+    eventId,
+    user.organization_id
+  ];
+
+  const result = await pool.query(query, values);
+  return result.rows[0];
+};
+
+// Add updateEvent to module.exports
 module.exports = {
     createEvent,
+    handleLifecycle,
     getMyEvents,
     getModerationQueue,
     moderateEvent,
     getApprovedEvents,
     registerForEvent,
     getMyRegistrations,
-
+    updateEvent
 };
-
-
-

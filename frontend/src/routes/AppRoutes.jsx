@@ -8,8 +8,9 @@ import AuthPage from "../view/pages/AuthPage";
 import CreateEvent from "../view/pages/CreateEvent";
 import ManageOrganizations from "../view/pages/ManageOrganizations";
 import ManageUsers from "../view/pages/ManageUsers";
-import ManageEvents from "../view/pages/ManageEvents";
+import ModerateEvents from "../view/pages/super-admin/ModerateEvents";
 
+import ManageEvents from "../view/pages/ManageEvents";
 /* DASHBOARDS */
 import SuperAdmin from "../view/dashboard/SuperAdmin";
 import Organization from "../view/dashboard/Organization";
@@ -27,6 +28,21 @@ const AppRoutes = () => {
 
       <Route path="/auth" element={<AuthPage />} />
 
+      {/* CENTRALIZED EVENT MANAGEMENT ROUTE */}
+      <Route 
+        path="/manage-events" 
+        element={
+          <ProtectedRoute>
+            {/* Allow both roles to access this route */}
+            <RoleProtectedRoute allowedRoles={["SUPER_ADMIN", "ORG_ADMIN"]}>
+              <MainLayout>
+                <ManageEvents />
+              </MainLayout>
+            </RoleProtectedRoute>
+          </ProtectedRoute>
+        } 
+      />
+
       {/* SUPER ADMIN ROUTES */}
       <Route path="/dashboard/super-admin" element={
         <ProtectedRoute><RoleProtectedRoute allowedRoles={["SUPER_ADMIN"]}><MainLayout><SuperAdmin /></MainLayout></RoleProtectedRoute></ProtectedRoute>
@@ -38,7 +54,7 @@ const AppRoutes = () => {
         <ProtectedRoute><RoleProtectedRoute allowedRoles={["SUPER_ADMIN"]}><MainLayout><ManageUsers /></MainLayout></RoleProtectedRoute></ProtectedRoute>
       } />
       <Route path="/superadmin/events" element={
-        <ProtectedRoute><RoleProtectedRoute allowedRoles={["SUPER_ADMIN"]}><MainLayout><ManageEvents /></MainLayout></RoleProtectedRoute></ProtectedRoute>
+        <ProtectedRoute><RoleProtectedRoute allowedRoles={["SUPER_ADMIN"]}><MainLayout><ModerateEvents /></MainLayout></RoleProtectedRoute></ProtectedRoute>
       } />
 
       {/* ORG ADMIN ROUTES */}

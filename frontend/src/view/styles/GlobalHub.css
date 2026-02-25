@@ -1,0 +1,97 @@
+/* Centralized Hub & Card Styles */
+:root {
+  --primary-teal: #47B599;
+  --primary-teal-dark: #3da188;
+  --action-yellow: #97f2d1;
+  --slate-text: #334155;
+  --border-color: #e2e8f0;
+}
+
+.org-hub-container {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Responsive Navigation Ribbon */
+.management-ribbon {
+  display: flex;
+  gap: 15px;
+  overflow-x: auto; /* Allow horizontal scrolling on small screens */
+  padding: 10px 5px 20px 5px;
+  scrollbar-width: thin;
+}
+
+.nav-card {
+  flex: 0 0 160px; /* Fixed width for cards in a scrollable row */
+  height: 100px;
+  background: #fff;
+  border: 2px solid var(--primary-teal);
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease-in-out;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+}
+
+.nav-card.active-yellow {
+  background-color: var(--action-yellow);
+  border-color: var(--primary-teal);
+}
+
+.nav-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 15px rgba(0,0,0,0.06);
+}
+
+/* Workspace Container with Responsive Border */
+.hub-workspace {
+  background: #fff;
+  border: 4px solid var(--action-yellow); /* Yellow border from visual sketch */
+  border-radius: 20px;
+  padding: 40px;
+  min-height: 500px;
+}
+
+/* --- RESPONSIVE BREAKPOINTS --- */
+
+/* For Tablets and smaller Desktops */
+@media (max-width: 1024px) {
+  .org-hub-container {
+    padding: 20px 10px;
+  }
+  .hub-workspace {
+    padding: 25px;
+  }
+}
+
+/* Mobile View: Adjusting the Hub and Form Layout */
+@media (max-width: 768px) {
+  .management-ribbon {
+    gap: 10px;
+  }
+  
+  .nav-card {
+    flex: 0 0 140px; /* Slightly smaller cards */
+    height: 90px;
+  }
+
+  .hub-workspace {
+    padding: 20px 15px;
+    border-width: 3px; /* Slightly thinner border on mobile */
+    border-radius: 15px;
+  }
+
+  /* Inheriting Form-specific mobile stacks */
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}

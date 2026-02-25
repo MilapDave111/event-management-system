@@ -13,7 +13,8 @@ router.put("/moderate", authenticate, authorize(["SUPER_ADMIN"]), eventControlle
 router.get("/org-stats", authenticate, authorize(["ORG_ADMIN"]), eventController.getOrgStats);
 router.get("/my-events", authenticate, authorize(["ORG_ADMIN"]), eventController.getMyEvents);
 router.post("/", authenticate, authorize(["ORG_ADMIN"]), eventController.createEvent);
-
+// Add this in the Org Admin section
+router.put("/:id", authenticate, authorize(["ORG_ADMIN"]), eventController.updateEvent);
 // User/Student Discovery
 router.get("/approved", authenticate, eventController.getAllApprovedEvents); 
 

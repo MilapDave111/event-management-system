@@ -164,6 +164,46 @@ const getUserRegistrations = async (userId) => {
   return result.rows;
 };
 
+/**
+ * Soft Delete Event
+ */
+const softDeleteEvent = async (eventId) => {
+  const query = `UPDATE events SET deleted_at = NOW(), status = 'cancelled' WHERE id = $1 RETURNING *;`;
+  const result = await pool.query(query, [eventId]);
+  return result.rows[0];
+};
+
+/**
+ * Restore Soft Deleted Event
+ */
+const restoreEvent = async (eventId) => {
+  const query = `UPDATE events SET deleted_at = NULL, status = 'draft' WHERE id = $1 RETURNING *;`;
+  const result = await pool.query(query, [eventId]);
+  return result.rows[0];
+};
+
+/**
+ * Archive Event
+ */
+const archiveEvent = async (eventId) => {
+  const query = `UPDATE events SET is_archived = TRUE, status = 'archived' WHERE id = $1 RETURNING *;`;
+  const result = await pool.query(query, [eventId]);
+  return result.rows[0];
+};
+
+/**
+ * Clone Event (Deep Copy)
+ */
+const cloneEvent = async (eventId) => {
+  const query = `
+    INSERT INTO events (org_id, title, description, event_date, location, capacity, start_datetime, end_datetime, status, event_type, event_subtype, scope, poster_url)
+    SELECT org_id, CONCAT(title, ' (Copy)'), description, event_date, location, capacity, start_datetime, end_datetime, 'draft', event_type, event_subtype, scope, poster_url
+    FROM events WHERE id = $1
+    RETURNING *;
+  `;
+  const result = await pool.query(query, [eventId]);
+  return result.rows[0];
+};
 
 module.exports = {
   insertEvent,
@@ -174,6 +214,10 @@ module.exports = {
     registerUser,
     getEventStatus,
     getUserRegistrations,
+    softDeleteEvent,
+  restoreEvent,
+  archiveEvent,
+  cloneEvent
 
 };
 

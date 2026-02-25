@@ -36,6 +36,7 @@ const MainLayout = ({ children }) => {
             {!isCollapsed && "Dashboard Overview"}
           </NavLink>
 
+          {/* SUPER ADMIN SPECIFIC LINKS */}
           {user?.role === 'SUPER_ADMIN' && (
             <>
               <NavLink to="/superadmin/organizations" style={({ isActive }) => isActive ? { ...styles.link, ...styles.activeLink } : styles.link}>
@@ -46,17 +47,17 @@ const MainLayout = ({ children }) => {
                 <span style={styles.icon}>👥</span>
                 {!isCollapsed && "System Users"}
               </NavLink>
-              <NavLink to="/superadmin/events" style={({ isActive }) => isActive ? { ...styles.link, ...styles.activeLink } : styles.link}>
-                <span style={styles.icon}>📢</span>
-                {!isCollapsed && "Moderate Events"}
-              </NavLink>
             </>
           )}
 
-          {user?.role === 'ORG_ADMIN' && (
-            <NavLink to="/org/create-event" style={({ isActive }) => isActive ? { ...styles.link, ...styles.activeLink } : styles.link}>
-              <span style={styles.icon}>➕</span>
-              {!isCollapsed && "Create New Event"}
+          {/* SHARED MANAGE EVENTS LINK (CENTRALIZED) */}
+          {(user?.role === 'SUPER_ADMIN' || user?.role === 'ORG_ADMIN') && (
+            <NavLink 
+              to="/manage-events" 
+              style={({ isActive }) => isActive ? { ...styles.link, ...styles.activeLink } : styles.link}
+            >
+              <span style={styles.icon}>{user?.role === 'SUPER_ADMIN' ? '📢' : '➕'}</span>
+              {!isCollapsed && (user?.role === 'SUPER_ADMIN' ? "Moderate Events" : "Manage Events")}
             </NavLink>
           )}
 

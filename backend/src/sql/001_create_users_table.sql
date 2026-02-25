@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 -- 1. Setup Extensions & Functions for Auto-Timestamps
 CREATE OR REPLACE FUNCTION update_timestamp()
 
@@ -9,7 +9,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-<<<<<<< HEAD
+
 -- 2. Organizations Table (PDF Feature 1.2)
 CREATE TABLE IF NOT EXISTS organizations (
     id SERIAL PRIMARY KEY,

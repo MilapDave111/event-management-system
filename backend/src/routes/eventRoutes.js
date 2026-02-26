@@ -17,7 +17,7 @@ router.post("/", authenticate, authorize(["ORG_ADMIN"]), eventController.createE
 router.put("/:id", authenticate, authorize(["ORG_ADMIN"]), eventController.updateEvent);
 // User/Student Discovery
 router.get("/approved", authenticate, eventController.getAllApprovedEvents); 
-
+router.post("/lifecycle", authenticate, authorize(["ORG_ADMIN"]), eventController.handleEventLifecycle);
 // User/Student Registrations
 router.post("/register", authenticate, authorize(["USER"]), regController.registerForEvent);
 router.get("/my-registrations", authenticate, authorize(["USER"]), regController.getMyRegistrations);

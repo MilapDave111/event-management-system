@@ -19,31 +19,34 @@
 /* Responsive Navigation Ribbon */
 .management-ribbon {
   display: flex;
-  gap: 15px;
-  overflow-x: auto; /* Allow horizontal scrolling on small screens */
-  padding: 10px 5px 20px 5px;
-  scrollbar-width: thin;
+  gap: 10px;
+  /* 2) Remove overflow-x to prevent scrollbar and use wrap instead */
+  flex-wrap: wrap; 
+  padding: 5px;
+  justify-content: flex-start;
 }
 
 .nav-card {
-  flex: 0 0 160px; /* Fixed width for cards in a scrollable row */
-  height: 100px;
+  /* 1) Make tabs smaller and rounded rectangle */
+  flex: 1 1 auto; /* Allow cards to grow/shrink to fit the row */
+  min-width: 120px;
+  max-width: 180px;
+  height: 60px; /* Reduced height for a sleeker look */
   background: #fff;
   border: 2px solid var(--primary-teal);
-  border-radius: 12px;
+  border-radius: 12px; /* Rounded rectangle */
   cursor: pointer;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   transition: all 0.2s ease-in-out;
   text-align: center;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+  padding: 0 10px;
 }
-
-.nav-card.active-yellow {
+.nav-card.active-state {
   background-color: var(--action-yellow);
   border-color: var(--primary-teal);
+  transform: translateY(-2px);
 }
 
 .nav-card:hover {
@@ -58,6 +61,11 @@
   border-radius: 20px;
   padding: 40px;
   min-height: 500px;
+}
+.card-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--slate-text);
 }
 
 /* --- RESPONSIVE BREAKPOINTS --- */

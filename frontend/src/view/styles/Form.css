@@ -103,20 +103,32 @@
   }
 }
 
-.submit-btn {
-  margin-top: 10px;
-  padding: 18px;
-  background: linear-gradient(135deg, var(--primary-teal) 0%, var(--primary-teal-dark) 100%);
-  color: #fff;
+.submit-btn, .secondary-btn {
+  height: 48px; /* Fixed height for consistency */
+  padding: 0 32px;
   border: none;
-  border-radius: 14px;
+  border-radius: 12px; /* Matches form input radius */
   cursor: pointer;
   font-weight: 700;
-  font-size: 16px;
-  width: 100%;
-  transition: transform 0.1s;
+  font-size: 15px;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto; /* No longer forces 100% width */
+}
+.submit-btn {
+  background: linear-gradient(135deg, var(--primary-teal) 0%, var(--primary-teal-dark) 100%);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(71, 181, 153, 0.2);
 }
 
-.submit-btn:active {
-  transform: scale(0.99);
+.secondary-btn {
+  background: #f1f5f9;
+  color: var(--slate-light);
+}
+
+.submit-btn:hover, .secondary-btn:hover {
+  transform: translateY(-1px);
+  opacity: 0.9;
 }

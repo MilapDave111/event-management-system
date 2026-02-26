@@ -6,11 +6,11 @@ import RoleProtectedRoute from "../controller/auth/RoleProtectedRoute";
 /* PAGES */
 import AuthPage from "../view/pages/AuthPage";
 import CreateEvent from "../view/pages/CreateEvent";
-import ManageOrganizations from "../view/pages/ManageOrganizations";
-import ManageUsers from "../view/pages/ManageUsers";
+import ManageOrganizations from "../view/pages/super-admin/ManageOrganizations";
+import ManageUsers from "../view/pages/super-admin/ManageUsers";
 import ModerateEvents from "../view/pages/super-admin/ModerateEvents";
 
-import ManageEvents from "../view/pages/ManageEvents";
+import ManageEvents from "../view/pages/super-admin/ManageEvents";
 /* DASHBOARDS */
 import SuperAdmin from "../view/dashboard/SuperAdmin";
 import Organization from "../view/dashboard/Organization";

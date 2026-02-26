@@ -85,17 +85,38 @@ const handleLifecycle = async (user, action, eventId) => {
   switch (action) {
     case 'delete':
       return await eventModel.softDeleteEvent(eventId);
+    
     case 'restore':
       return await eventModel.restoreEvent(eventId);
+    
     case 'archive':
       return await eventModel.archiveEvent(eventId);
+    
     case 'clone':
       return await eventModel.cloneEvent(eventId);
+    
+    case 'unarchive':
+      // 1. Define the query
+      const unarchiveQuery = `
+        UPDATE events 
+        SET is_archived = FALSE, 
+            status = 'draft' 
+        WHERE id = $1 AND org_id = $2 
+        RETURNING *;
+      `;
+      // 2. Execute the query using the pool and return the result
+      const result = await pool.query(unarchiveQuery, [eventId, user.organization_id]);
+      
+      if (result.rows.length === 0) {
+        throw new Error("Event not found or you do not have permission to unarchive it");
+      }
+      
+      return result.rows[0];
+
     default:
       throw new Error("Invalid Lifecycle Action");
   }
 };
-
 /**
  * Get Events for ORG_ADMIN
  */

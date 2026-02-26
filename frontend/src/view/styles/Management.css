@@ -1,0 +1,95 @@
+/* Layout & Containers */
+.mgmt-flex-container {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.mgmt-card {
+  background-color: #ffffff;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  flex: 1;
+}
+
+/* Table Design */
+.mgmt-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.mgmt-th {
+  padding: 16px;
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-bottom: 2px solid #f1f5f9;
+  text-align: left;
+}
+
+.mgmt-td {
+  padding: 16px;
+  font-size: 14px;
+  color: #334155;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+}
+
+/* Status Badges */
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  display: inline-block;
+}
+
+.status-approved { background: #f0fdf4; color: #16a34a; }
+.status-rejected { background: #fef2f2; color: #dc2626; }
+.status-pending { background: #fffbeb; color: #d97706; }
+.status-draft { background: #f1f5f9; color: #64748b; }
+
+/* Form Controls */
+.mgmt-input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  outline: none;
+  transition: border-color 0.2s;
+  font-size: 14px;
+}
+
+.mgmt-input:focus {
+  border-color: #47B599;
+}
+
+/* Moderation & Action Buttons */
+.mgmt-btn, .approve-btn, .reject-btn, .mgmt-cancel-btn {
+  height: 40px; /* Slightly shorter for management lists */
+  padding: 0 20px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  width: auto; /* Remove width: 100% */
+}
+
+
+
+.mgmt-btn:hover, .approve-btn:hover, .reject-btn:hover {
+  opacity: 0.9;
+}
+
+.mgmt-btn, .approve-btn { background-color: var(--primary-teal); color: #fff; }
+.reject-btn { background-color: #ef4444; color: #fff; }
+.mgmt-cancel-btn { background-color: #f1f5f9; color: var(--slate-light); }

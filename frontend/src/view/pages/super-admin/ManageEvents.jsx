@@ -1,7 +1,7 @@
 import React from 'react';
-import { useAuth } from '../../model/auth/auth.context';
-import ModerateEvents from './super-admin/ModerateEvents';
-import OrgEventHub from './org-admin/OrgEventHub';
+import { useAuth } from '../../../model/auth/auth.context';
+import ModerateEvents from './ModerateEvents';
+import OrgEventHub from '../org-admin/OrgEventHub';
 
 const ManageEvents = () => {
   const { user } = useAuth();

@@ -1,0 +1,427 @@
+/* EventManager.css */
+.manager-container {
+  width: 100%;
+}
+
+.manager-title {
+  color: #47B599;
+  margin-bottom: 25px;
+  font-weight: 800;
+}
+
+/* NEW: Centered Title for the Hub Form */
+.manager-title-centered {
+  color: #47B599;
+  margin-bottom: 30px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.stat-card {
+  background: #fff;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.stat-card.teal-border {
+  border-top: 4px solid #47B599;
+}
+
+.stat-card.blue-border {
+  border-top: 4px solid #04befe;
+}
+
+.stat-card.orange-border {
+  border-top: 4px solid #f59e0b;
+}
+
+.stat-label {
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.stat-value {
+  font-size: 32px;
+  color: #1e293b;
+  margin-top: 10px;
+}
+
+/* Helper text for the default hub view */
+.helper-text {
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* --- Form Hub Specific Styles --- */
+
+.hub-center-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 20px;
+  min-height: calc(100vh - 150px);
+}
+
+.hub-form-container {
+  width: 100%;
+  max-width: 650px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  background: #fff;
+}
+
+/* Search Dropdown & Staff Chips */
+.relative-pos {
+  position: relative;
+}
+
+.search-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  z-index: 100;
+  max-height: 150px;
+  overflow-y: auto;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.search-item { 
+  padding: 10px; 
+  cursor: pointer; 
+  font-size: 13px; 
+}
+
+.search-item:hover { 
+  background: #f1f5f9; 
+  color: #47B599; 
+}
+
+.selected-chips { 
+  display: flex; 
+  flex-wrap: wrap; 
+  gap: 8px; 
+  margin: 15px 0; 
+}
+
+.staff-chip {
+  background: #47B599;
+  color: #fff;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.remove-chip {
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.remove-chip:hover {
+  color: #ff4d4d;
+}
+
+/* Full Width Submit Button */
+.submit-btn-full {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px 20px;
+  background: #47B599;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.submit-btn-full:hover {
+  background: #3da188;
+}
+
+/* Card Selection Grid (if used for types later) */
+.event-type-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.type-card {
+  padding: 12px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #64748b;
+}
+
+.type-card.active {
+  border-color: #47B599;
+  background: #47B599;
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(71, 181, 153, 0.3);
+}
+.form-column-group {
+  display: flex;
+  flex-direction: column; /* This stacks the elements vertically */
+  gap: 20px;
+  width: 100%;
+}
+
+/* Ensure individual input groups take full width */
+.input-group-full {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+
+/* Read-only fields styling */
+.form-input.read-only {
+  background-color: #f8fafc;
+  color: #64748b;
+  border-color: #e2e8f0;
+  cursor: not-allowed;
+}
+
+/* Member & Role Display Area */
+.member-role-display {
+  background: #f1f5f9;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+}
+
+.member-role-row {
+  font-size: 14px;
+  padding: 5px 0;
+  border-bottom: 1px solid #cbd5e1;
+  color: #1e293b;
+}
+
+.member-role-row:last-child {
+  border-bottom: none;
+}
+
+.text-muted {
+  color: #47B599;
+  font-weight: 700;
+}
+
+/* Button Layout for Step 2 */
+.form-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.back-btn {
+  flex: 1;
+  padding: 12px;
+  background: #f1f5f9;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.submit-btn-primary {
+  flex: 2;
+  padding: 12px;
+  background: #47B599;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+
+
+/* --- Manage Staff Layout & UI --- */
+.manage-staff-page-container {
+  display: flex;
+  height: 100vh;
+  background-color: #f8f9fa;
+  overflow: hidden;
+}
+
+.manage-staff-sidebar {
+  width: 250px;
+  flex-shrink: 0;
+  /* Sidebar styles are usually inherited, keeping this as a wrapper */
+}
+
+.manage-staff-main {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.manage-staff-header h2 {
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: #2b3445;
+  margin-bottom: 0.5rem;
+}
+
+.manage-staff-header p {
+  color: #7d879c;
+  margin-bottom: 2rem;
+}
+
+/* --- Search Card --- */
+.manage-staff-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+  border: 1px solid #eef0f5;
+}
+
+.search-label {
+  display: block;
+  font-weight: 600;
+  color: #4b5563;
+  margin-bottom: 0.5rem;
+}
+
+.search-input-box {
+  position: relative;
+}
+
+.search-input-box input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  outline: none;
+  font-size: 1rem;
+}
+
+.search-input-box input:focus {
+  border-color: #0fb8b1;
+  box-shadow: 0 0 0 2px rgba(15, 184, 177, 0.2);
+}
+
+.search-dropdown {
+  position: absolute;
+  width: 100%;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  margin-top: 5px;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.search-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.search-item:hover {
+  background-color: #f9fafb;
+}
+
+.search-item-info span {
+  display: block;
+  font-weight: bold;
+  color: #111827;
+}
+
+.search-item-info small {
+  color: #6b7280;
+}
+
+/* --- Table Styles --- */
+.manage-staff-table-card {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  border: 1px solid #eef0f5;
+}
+
+.manage-staff-table-card h3 {
+  padding: 1rem 1.5rem;
+  background-color: #f8fafc;
+  margin: 0;
+  border-bottom: 1px solid #eef0f5;
+  color: #334155;
+  font-size: 1.1rem;
+}
+
+.staff-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.staff-table th {
+  text-align: left;
+  padding: 1rem 1.5rem;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: #64748b;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.staff-table td {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e2e8f0;
+  color: #334155;
+}
+
+/* --- Buttons --- */
+.add-btn {
+  background-color: #0fb8b1;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.add-btn:hover {
+  background-color: #0ca39d;
+}
+
+.remove-btn {
+  color: #ef4444;
+  background: none;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.remove-btn:hover {
+  text-decoration: underline;
+}

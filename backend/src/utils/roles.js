@@ -1,0 +1,9 @@
+const ROLES = {
+  SUPER_ADMIN: "SUPER_ADMIN",
+  ORG_ADMIN: "ORG_ADMIN",
+  EVENT_MANAGER: "EVENT_MANAGER",
+  EVENT_STAFF: "EVENT_STAFF",
+  USER: "USER",
+};
+
+module.exports = ROLES;

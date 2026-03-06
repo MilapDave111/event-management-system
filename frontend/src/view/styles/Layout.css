@@ -1,0 +1,158 @@
+/* Main Wrapper - Flex container for sidebar + content */
+.main-wrapper {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  background-color: #f1f5f9;
+  overflow: hidden;
+}
+
+/* SIDEBAR - restored to exact original styling */
+.sidebar-base {
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 16px;
+  box-shadow: 4px 0 20px rgba(0,0,0,0.05);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 100;
+  height: 100%;
+}
+
+.sidebar-logo-area {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #f1f5f9;
+  margin-bottom: 20px;
+}
+
+.sidebar-logo-text {
+  color: #47B599;
+  font-weight: 900;
+  font-size: 22px;
+  letter-spacing: -1px;
+  margin: 0;
+}
+
+.sidebar-nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #64748b;
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: 0.2s ease;
+  white-space: nowrap;
+}
+
+.sidebar-link.active {
+  background: linear-gradient(135deg, #47B599 0%, #3da188 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(71, 181, 153, 0.3);
+}
+
+.sidebar-icon {
+  font-size: 18px;
+  margin-right: 12px;
+}
+
+/* SIDEBAR FOOTER & USER PROFILE */
+.sidebar-footer {
+  border-top: 1px solid #f1f5f9;
+  padding-top: 20px;
+  margin-top: auto;
+}
+
+.user-brief {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  background-color: #47B599; /* Theme color */
+  color: #ffffff;
+  border-radius: 8px; /* Original square-rounded look */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.user-name { margin: 0; font-size: 14px; font-weight: 700; color: #1e293b; }
+.user-role { margin: 0; font-size: 10px; color: #94a3b8; text-transform: uppercase; }
+
+/* Logout Buttons - Restored light red background */
+.logout-btn-full {
+  width: 100%;
+  padding: 12px;
+  background-color: #fff1f2;
+  color: #e11d48;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logout-btn-small {
+  width: 100%;
+  padding: 12px;
+  background-color: #fff1f2;
+  color: #e11d48;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+/* CONTENT CONTAINER & HEADER */
+.content-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.app-header {
+  height: 80px;
+  background: linear-gradient(90deg, #47B599, #04befe);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  color: #ffffff;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  z-index: 50;
+}
+
+.role-tag {
+  background: rgba(255,255,255,0.2);
+  padding: 6px 16px;
+  border-radius: 30px;
+  font-size: 10px;
+  font-weight: bold;
+  border: 1px solid rgba(255,255,255,0.3);
+  text-transform: uppercase;
+}
+
+.main-scroll-area {
+  flex: 1;
+  padding: 40px;
+  overflow-y: auto;
+}

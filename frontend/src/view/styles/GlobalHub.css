@@ -1,0 +1,268 @@
+/* Centralized Hub & Card Styles */
+:root {
+  --primary-teal: #47B599;
+  --primary-teal-dark: #3da188;
+  --action-yellow: #97f2d1;
+  --slate-text: #334155;
+  --border-color: #e2e8f0;
+}
+/* --- Fix: Multi-Card Grid for Sub-Teams --- */
+
+
+/* Ensure the mint-border workspace doesn't squash the grid */
+.hub-workspace {
+  width: 100% !important;
+  max-width: 1200px !important;
+  display: block !important; /* Forces children to follow document flow, not flex-column */
+  margin: 0 auto;
+}
+.modern-card-grid {
+  display: grid !important;
+  /* Automatically fits 3-4 cards depending on screen width */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+  gap: 24px !important;
+  width: 100% !important;
+  padding: 10px 0;
+}
+
+.card-flush {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  display: flex;
+  flex-direction: column;
+}
+/* Fix for Horizontal Sub-Tabs */
+.management-ribbon {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  gap: 12px !important;
+  justify-content: flex-start !important;
+}
+.org-hub-container {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ============================================================
+   SPECIFIC STAFF TEAM MANAGEMENT LAYOUT (Isolated)
+   ============================================================ */
+
+/* 1. Main Workspace Wrapper */
+.st-management-container {
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
+}
+
+/* 2. Standardized Content Card (The White Box) */
+.st-content-card {
+    background: #ffffff;
+    border: 1px solid #f1f5f9;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.02);
+    width: 100%;
+    margin-top: 5px;
+    overflow: hidden; /* Clips the table corners to the card radius */
+}
+
+/* 3. The Grid System (Responsive: 3-4 Cards per row) */
+.st-unit-grid {
+    display: grid;
+    /* This creates the Milap Standard Event Explorer look */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 25px; /* Internal padding inside the white box */
+}
+
+/* 4. Sub-Unit Cards (Inside the Grid) */
+.st-unit-item {
+    background: #ffffff;
+    border: 1px solid #eef2f6;
+    border-left: 4px solid #47B599; /* Mint accent from your screenshot */
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    min-height: 180px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.st-unit-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* 5. Sub-Unit Badges and Text */
+.st-unit-id {
+    background: #f0fdf4;
+    color: #47B599;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 6px;
+    width: fit-content;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.st-unit-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0 0 8px 0;
+}
+
+.st-unit-desc {
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.4;
+    flex-grow: 1; /* Pushes buttons to bottom */
+}
+
+/* 6. Action Buttons inside cards */
+.st-card-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #f8fafc;
+}
+
+/* 7. Responsive Adjustments */
+@media (max-width: 768px) {
+    .st-unit-grid {
+        grid-template-columns: 1fr; /* Stack on mobile */
+        padding: 15px;
+    }
+    
+    .st-content-card {
+        border-radius: 8px;
+    }
+}
+
+
+
+
+/* Responsive Navigation Ribbon */
+.management-ribbon {
+  display: flex;
+  gap: 10px;
+  /* 2) Remove overflow-x to prevent scrollbar and use wrap instead */
+  flex-wrap: wrap; 
+  padding: 5px;
+  justify-content: flex-start;
+}
+
+.nav-card {
+  /* 1) Make tabs smaller and rounded rectangle */
+  flex: 1 1 auto; /* Allow cards to grow/shrink to fit the row */
+  min-width: 120px;
+  max-width: 180px;
+  height: 60px; /* Reduced height for a sleeker look */
+  background: #fff;
+  border: 2px solid var(--primary-teal);
+  border-radius: 12px; /* Rounded rectangle */
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease-in-out;
+  text-align: center;
+  padding: 0 10px;
+}
+.nav-card.active-state {
+  background-color: var(--action-yellow);
+  border-color: var(--primary-teal);
+  transform: translateY(-2px);
+}
+
+.nav-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 15px rgba(0,0,0,0.06);
+}
+
+/* Workspace Container with Responsive Border */
+.hub-workspace {
+  background: #fff;
+  border: 4px solid var(--action-yellow); /* Yellow border from visual sketch */
+  border-radius: 20px;
+  padding: 40px;
+  min-height: 500px;
+}
+.card-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--slate-text);
+}
+
+/* --- RESPONSIVE BREAKPOINTS --- */
+
+/* --- ENHANCED RESPONSIVE MEDIA QUERIES FOR CENTRALIZED HUB --- */
+
+/* Tablet View (max-width: 768px) Updates */
+@media (max-width: 768px) {
+  .org-hub-container {
+    padding: 15px 8px; /* Tighter padding for tablet layout */
+    gap: 15px;
+  }
+
+  .management-ribbon {
+    justify-content: center; /* Center cards for a symmetrical look on tablets */
+    gap: 12px;
+  }
+
+  .nav-card {
+    flex: 1 1 calc(33.33% - 12px); /* Three cards per row on tablets */
+    min-width: 100px;
+    height: 70px; /* Balance between sleeker desktop and bulky mobile */
+  }
+
+  .hub-workspace {
+    min-height: 400px; /* Reduce height requirement for vertical space */
+  }
+}
+
+/* Phone View (max-width: 480px) */
+@media (max-width: 480px) {
+  .org-hub-container {
+    padding: 10px 5px;
+    gap: 10px;
+  }
+
+  .management-ribbon {
+    gap: 8px;
+    padding: 0;
+  }
+
+  .nav-card {
+    flex: 1 1 calc(50% - 8px); /* Two cards per row for easy thumb access */
+    height: 65px;
+    border-radius: 10px;
+    padding: 5px;
+  }
+
+  .card-label {
+    font-size: 11px; /* Smaller text to prevent overflow in 2-column mobile grid */
+    line-height: 1.2;
+  }
+
+  .hub-workspace {
+    padding: 20px 10px;
+    border-width: 2px; /* Thinner border to maximize internal content area */
+    border-radius: 12px;
+    min-height: 350px;
+  }
+
+  /* Force elements to stack inside the hub */
+  .form-row {
+    grid-template-columns: 1fr !important;
+    gap: 15px;
+  }
+}

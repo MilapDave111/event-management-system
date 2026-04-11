@@ -1,0 +1,140 @@
+/* Isolated styles for Milap's Event Cards - Matching Original UI */
+.m-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+    gap: 24px; 
+    margin-top: 30px; 
+}
+
+.m-card { 
+    background: #fff; 
+    border-radius: 16px; 
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); 
+    overflow: hidden; 
+    display: flex; 
+    flex-direction: column; 
+    transition: transform 0.2s; 
+    position: relative; 
+}
+
+.m-cardBanner { 
+    height: 120px; 
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%); 
+    position: relative; 
+    padding: 15px; 
+}
+
+.m-orgBadge { 
+    position: absolute; 
+    top: 15px; 
+    left: 15px; 
+    background: rgba(255,255,255,0.9); 
+    color: #0f172a; 
+    padding: 4px 12px; 
+    border-radius: 20px; 
+    font-size: 12px; 
+    font-weight: 700; 
+}
+
+.m-priceTag { 
+    position: absolute; 
+    bottom: -15px; 
+    right: 20px; 
+    color: #fff; 
+    padding: 6px 16px; 
+    border-radius: 20px; 
+    font-size: 14px; 
+    font-weight: 800; 
+    border: 3px solid #fff; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+}
+
+.m-paid { background: #10b981; }
+.m-free { background: #47B599; }
+
+.m-cardBody { 
+    padding: 30px 20px 20px 20px; 
+    display: flex; 
+    flex-direction: column; 
+    flex-grow: 1; 
+}
+
+.m-heart-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: white;
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    z-index: 5;
+    transition: all 0.2s ease;
+}
+
+.m-heart-btn:hover {
+    transform: scale(1.1);
+}
+
+.m-heart-red {
+    color: #ef4444; /* Red color for filled heart */
+    font-size: 18px;
+}
+
+.m-heart-empty {
+    color: #94a3b8; /* Slate color for empty heart */
+    font-size: 18px;
+}
+
+.m-eventTitle { 
+    margin: 0 0 15px 0; 
+    color: #0f172a; 
+    font-size: 20px; 
+    font-weight: 700; 
+    line-height: 1.3; 
+}
+
+.m-detailsGrid { 
+    display: grid; 
+    gap: 10px; 
+    margin-bottom: 25px; 
+}
+
+.m-detailItem { 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    color: #64748b; 
+    font-size: 14px; 
+}
+
+.m-regBtn { 
+    width: 100%; 
+    padding: 14px; 
+    background: #47B599; 
+    color: #fff; 
+    border: none; 
+    border-radius: 10px; 
+    font-weight: 700; 
+    font-size: 15px; 
+    cursor: pointer; 
+    margin-top: auto;
+}
+
+.m-doneBtn { 
+    width: 100%; 
+    padding: 14px; 
+    background: #f1f5f9; 
+    color: #94a3b8; 
+    border: 1px solid #e2e8f0; 
+    border-radius: 10px; 
+    font-weight: 700; 
+    font-size: 15px; 
+    cursor: not-allowed; 
+    margin-top: auto;
+}

@@ -140,6 +140,31 @@ const moderateEvent = async (req, res) => {
   }
 };
 
+// Toggle Save (Add/Remove)
+exports.toggleSave = async (req, res) => {
+  try {
+    const { eventId } = req.body;
+    const userId = req.user.id;
+
+    const result = await eventModel.toggleSaveEvent(userId, eventId);
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Get Saved Events for the Stats & Wishlist Tab
+exports.getSavedEvents = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const saved = await eventModel.getSavedEvents(userId);
+    res.status(200).json(saved);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
 // 3. Org Admin: Dashboard Stats
 // 3. Org Admin: Dashboard Stats
 const getOrgStats = async (req, res) => {
@@ -573,7 +598,26 @@ const generateGlobalAiPoster = async (req, res) => {
   }
 };
 
+const toggleSave = async (req, res) => {
+  try {
+    const { eventId } = req.body;
+    const userId = req.user.id;
+    const result = await eventModel.toggleSaveEvent(userId, eventId);
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
+const getSavedEvents = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const saved = await eventModel.getSavedEvents(userId);
+    res.status(200).json(saved);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 module.exports = { 
   getSuperAdminStats,
   getAllEventsForModeration, 
@@ -593,6 +637,8 @@ module.exports = {
   getTrashEvents,
   getAdminAllEvents ,
   getEventRegistrations,
-  generateGlobalAiPoster
+  generateGlobalAiPoster,
+  toggleSave,
+  getSavedEvents
   
 };

@@ -37,7 +37,8 @@ router.get("/approved", authenticate, eventController.getAllApprovedEvents);
 router.post("/register", authenticate, authorize(["USER"]), regController.registerForEvent);
 router.get("/my-registrations", authenticate, authorize(["USER"]), regController.getMyRegistrations);
 router.post("/:eventId/feedback", authenticate, feedbackController.submitFeedback);
-
+router.post("/toggle-save", authenticate, authorize(["USER"]), eventController.toggleSave);
+router.get("/my-saved", authenticate, authorize(["USER"]), eventController.getSavedEvents);
 // --- Student Ticket Payment ---
 router.post("/user/init-payment", authenticate, authorize(["USER"]), regController.initUserPayment);
 router.post("/user/verify-payment", authenticate, authorize(["USER"]), regController.verifyUserPayment);
@@ -80,6 +81,7 @@ router.get("/tasks/logs", authenticate, authorize(["ORG_ADMIN", "EVENT_MANAGER",
 // ==========================================
 // 7. EVENT STAFF SPECIFIC ROUTES
 // ==========================================
+
 router.get("/staff-stats", authenticate, authorize(["EVENT_STAFF"]), managerStaffCtrl.getStaffStats);
 router.get("/assigned-events", authenticate, authorize(["EVENT_STAFF"]), managerStaffCtrl.getStaffAssignedEvents);
 router.get("/staff/event-team", authenticate, authorize(["EVENT_STAFF"]), managerStaffCtrl.getStaffList);

@@ -30,7 +30,7 @@ import MainLayout from "../view/layout/MainLayout";
 import StaffEventHub from "../view/pages/eventStaff/StaffEventHub";
 import StaffRegistrationsTab from "../view/pages/eventStaff/tabs/StaffRegistrationsTab";
 import Profile from '../view/pages/profile'; 
-import ViewTicketWrapper from '../view/pages/user/ViewTicketWrapper';
+import ViewTicket from '../view/pages/user/ViewTicket';
 
 import VerifyEmail from "../view/pages/VerifyEmail";
 const AppRoutes = () => {
@@ -62,7 +62,10 @@ const AppRoutes = () => {
 
 
 
-<Route path="/view-ticket" element={<ViewTicketWrapper />} />
+<Route 
+        path="/view-ticket" 
+        element={<ProtectedRoute><RoleProtectedRoute allowedRoles={["USER"]}><MainLayout><ViewTicket /></MainLayout></RoleProtectedRoute></ProtectedRoute>} 
+      />
 
       {/* EVENT MANAGER ROUTES (DUAL ACCESS) */}
       <Route path="/dashboard/event-manager" element={<ProtectedRoute><RoleProtectedRoute allowedRoles={["EVENT_MANAGER", "ORG_ADMIN"]}><MainLayout><EventManagerDashboard /></MainLayout></RoleProtectedRoute></ProtectedRoute>} />

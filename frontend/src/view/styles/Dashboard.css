@@ -1,5 +1,18 @@
-.db-container { width: 100%; }
-.db-title { color: #47B599; margin-bottom: 25px; font-weight: 800; font-size: 1.5rem; }
+/* Update your db-container class in Dashboard.css */
+.db-container { 
+    width: 100%; 
+    padding-top: 10px; /* Reduced from likely 40px or 50px */
+}
+
+/* Also adjust the title margin if it's still too low */
+.db-title { 
+    color: #47B599; 
+    margin-top: -10px;      /* Ensure no extra margin above the text */
+    margin-bottom: 20px; 
+    font-weight: 800; 
+    font-size: 1.5rem; 
+}
+/* .db-title { color: #47B599; margin-bottom: 25px; font-weight: 800; font-size: 1.5rem; } */
 .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
 .stat-card { background: #fff; padding: 25px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
 .stat-label { color: #64748b; font-size: 12px; font-weight: 700; text-transform: uppercase; margin: 0; }

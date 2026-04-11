@@ -242,6 +242,28 @@ const cloneEvent = async (eventId) => {
   return result.rows[0];
 };
 
+const toggleSaveEvent = async (userId, eventId) => {
+    const check = await pool.query('SELECT id FROM wishlist WHERE user_id = $1 AND event_id = $2', [userId, eventId]);
+    if (check.rows.length > 0) {
+        await pool.query('DELETE FROM wishlist WHERE user_id = $1 AND event_id = $2', [userId, eventId]);
+        return { message: "Removed from Wishlist" };
+    } else {
+        await pool.query('INSERT INTO wishlist (user_id, event_id) VALUES ($1, $2)', [userId, eventId]);
+        return { message: "Added to Wishlist" };
+    }
+};
+
+const getSavedEvents = async (userId) => {
+    const query = `
+        SELECT e.*, o.name as organization_name 
+        FROM wishlist w
+        JOIN events e ON w.event_id = e.id
+        JOIN organizations o ON e.org_id = o.id
+        WHERE w.user_id = $1
+    `;
+    const result = await pool.query(query, [userId]);
+    return result.rows;
+};
 module.exports = {
   insertEvent,
   updatePaymentStatus,
@@ -255,5 +277,7 @@ module.exports = {
   softDeleteEvent,
   restoreEvent,
   archiveEvent,
-  cloneEvent
+  cloneEvent,
+  toggleSaveEvent,
+  getSavedEvents
 };

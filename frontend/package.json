@@ -9,7 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@google/generative-ai": "^0.24.1",
+=======
+>>>>>>> 85b69858d036ab59462bd5a6dac002622ffe8a54
     "axios": "^1.6.0",
     "html5-qrcode": "^2.3.8",
     "qrcode.react": "^4.2.0",

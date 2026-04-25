@@ -212,6 +212,7 @@ const createEvent = async (req, res) => {
     // FIX: Using organization_id context to satisfy Foreign Key Constraint
     const org_id = req.user.organization_id || req.user.org_id;
 
+<<<<<<< HEAD
     // --- NEW CONSTRAINT CHECK ---
     // Queries the database to see if any active event shares the same date and location
     const conflictCheckQuery = `
@@ -229,6 +230,8 @@ const createEvent = async (req, res) => {
     }
     // -----------------------------
 
+=======
+>>>>>>> 85b69858d036ab59462bd5a6dac002622ffe8a54
     const query = `
       INSERT INTO events (
         title, description, event_type, event_subtype, scope, location, 
@@ -254,6 +257,10 @@ const createEvent = async (req, res) => {
     res.status(500).json({ message: "Failed to create event" });
   }
 };
+<<<<<<< HEAD
+=======
+
+>>>>>>> 85b69858d036ab59462bd5a6dac002622ffe8a54
 // ==========================================
 // MANDATORY PAYMENT LOGIC
 // ==========================================

@@ -1,4 +1,10 @@
 const pool = require("../../config/db");
+<<<<<<< HEAD
+=======
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
+>>>>>>> 85b69858d036ab59462bd5a6dac002622ffe8a54
 
 exports.submitFeedback = async (req, res) => {
   try {
@@ -69,7 +75,11 @@ exports.generateFeedbackSummary = async (req, res) => {
       return res.status(404).json({ error: "No feedback available for this event yet." });
     }
     if (feedbacks.length < 3) {
+<<<<<<< HEAD
       return res.status(400).json({ error: `Not enough data. Found exactly ${feedbacks.length} review(s) for this event. You need at least 3 to generate an AI summary.` });
+=======
+      return res.status(400).json({ error: "Not enough data. You need at least 3 reviews to generate a meaningful AI summary." });
+>>>>>>> 85b69858d036ab59462bd5a6dac002622ffe8a54
     }
 
     // 3. Aggregate the raw data into a single string
@@ -96,6 +106,7 @@ exports.generateFeedbackSummary = async (req, res) => {
     ${rawFeedbackText}
     `;
 
+<<<<<<< HEAD
     // 5. THE NUCLEAR BYPASS: Native Fetch directly to Google REST API using the active Gemini 2.5 model
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
@@ -131,12 +142,29 @@ exports.generateFeedbackSummary = async (req, res) => {
     }
     
     responseText = responseText.substring(jsonStartIndex, jsonEndIndex + 1);
+=======
+    // 5. Call the API
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+    const result = await model.generateContent(prompt);
+    
+    // 6. Clean and parse the response
+    let responseText = result.response.text().trim();
+    // Strip markdown formatting if the AI disobeys instructions
+    if (responseText.startsWith('```json')) {
+      responseText = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
+    }
+    
+>>>>>>> 85b69858d036ab59462bd5a6dac002622ffe8a54
     const jsonSummary = JSON.parse(responseText);
 
     res.status(200).json({ summary: jsonSummary, totalReviews: feedbacks.length });
 
   } catch (error) {
     console.error("AI Feedback Summary Error:", error);
+<<<<<<< HEAD
     res.status(500).json({ error: error.message || "Failed to generate AI summary." });
+=======
+    res.status(500).json({ error: "Failed to generate AI summary. The AI may have returned malformed data." });
+>>>>>>> 85b69858d036ab59462bd5a6dac002622ffe8a54
   }
 };

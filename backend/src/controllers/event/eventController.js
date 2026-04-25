@@ -212,6 +212,23 @@ const createEvent = async (req, res) => {
     // FIX: Using organization_id context to satisfy Foreign Key Constraint
     const org_id = req.user.organization_id || req.user.org_id;
 
+    // --- NEW CONSTRAINT CHECK ---
+    // Queries the database to see if any active event shares the same date and location
+    const conflictCheckQuery = `
+      SELECT id FROM events 
+      WHERE location = $1 
+      AND event_date = $2 
+      AND status != 'rejected' 
+      AND deleted_at IS NULL 
+      LIMIT 1
+    `;
+    const conflictResult = await pool.query(conflictCheckQuery, [location, event_date]);
+
+    if (conflictResult.rows.length > 0) {
+      return res.status(409).json({ message: "Conflict: Another event is already scheduled at this exact location on this day." });
+    }
+    // -----------------------------
+
     const query = `
       INSERT INTO events (
         title, description, event_type, event_subtype, scope, location, 
@@ -237,7 +254,6 @@ const createEvent = async (req, res) => {
     res.status(500).json({ message: "Failed to create event" });
   }
 };
-
 // ==========================================
 // MANDATORY PAYMENT LOGIC
 // ==========================================

@@ -1,7 +1,4 @@
 const pool = require("../../config/db");
-const { GoogleGenerativeAI } = require("@google/generative-ai");
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-
 
 exports.submitFeedback = async (req, res) => {
   try {
@@ -72,7 +69,7 @@ exports.generateFeedbackSummary = async (req, res) => {
       return res.status(404).json({ error: "No feedback available for this event yet." });
     }
     if (feedbacks.length < 3) {
-      return res.status(400).json({ error: "Not enough data. You need at least 3 reviews to generate a meaningful AI summary." });
+      return res.status(400).json({ error: `Not enough data. Found exactly ${feedbacks.length} review(s) for this event. You need at least 3 to generate an AI summary.` });
     }
 
     // 3. Aggregate the raw data into a single string
@@ -99,23 +96,47 @@ exports.generateFeedbackSummary = async (req, res) => {
     ${rawFeedbackText}
     `;
 
-    // 5. Call the API
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
-    const result = await model.generateContent(prompt);
+    // 5. THE NUCLEAR BYPASS: Native Fetch directly to Google REST API using the active Gemini 2.5 model
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      throw new Error("GEMINI_API_KEY is missing from your .env file.");
+    }
+
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
     
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }]
+      })
+    });
+
+    const data = await response.json();
+
+    // Catch REST API errors immediately
+    if (!response.ok) {
+      console.error("[REST API Error]:", data);
+      throw new Error(data.error?.message || "Google API rejected the native request.");
+    }
+
     // 6. Clean and parse the response
-    let responseText = result.response.text().trim();
-    // Strip markdown formatting if the AI disobeys instructions
-    if (responseText.startsWith('```json')) {
-      responseText = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
+    let responseText = data.candidates[0].content.parts[0].text.trim();
+    
+    const jsonStartIndex = responseText.indexOf('{');
+    const jsonEndIndex = responseText.lastIndexOf('}');
+    
+    if (jsonStartIndex === -1 || jsonEndIndex === -1) {
+         throw new Error("The AI model failed to return a valid JSON structure.");
     }
     
+    responseText = responseText.substring(jsonStartIndex, jsonEndIndex + 1);
     const jsonSummary = JSON.parse(responseText);
 
     res.status(200).json({ summary: jsonSummary, totalReviews: feedbacks.length });
 
   } catch (error) {
     console.error("AI Feedback Summary Error:", error);
-    res.status(500).json({ error: "Failed to generate AI summary. The AI may have returned malformed data." });
+    res.status(500).json({ error: error.message || "Failed to generate AI summary." });
   }
 };

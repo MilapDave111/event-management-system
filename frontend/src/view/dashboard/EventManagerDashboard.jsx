@@ -3,6 +3,7 @@ import api from '../../services/api';
 import toast from 'react-hot-toast';
 import '../styles/EventManager.css'; 
 import { useNavigate } from 'react-router-dom';
+
 // --- 1. Premium AI Feedback Analyzer UI ---
 const AiFeedbackSummary = ({ eventsList }) => {
   const [selectedEventId, setSelectedEventId] = useState('');
@@ -31,7 +32,12 @@ const AiFeedbackSummary = ({ eventsList }) => {
       setSummary(response.data.summary);
       toast.success(`Analyzed ${response.data.totalReviews} reviews successfully.`);
     } catch (err) {
-      toast.error(err.response?.data?.error || "Failed to generate AI summary. Ensure the event has at least 3 reviews.");
+      console.error("AI Analysis Failed:", err);
+      // DIAGNOSTIC UPDATE: We now accurately fetch the EXACT error message from the backend crash.
+      // We look for 'error', then 'message', then default to the standard network error string.
+      const exactErrorMessage = err.response?.data?.error || err.response?.data?.message || err.message || "Network Error: Could not connect to backend.";
+      
+      toast.error(exactErrorMessage);
       setAnalysisTriggered(false); // Hide the empty section if it fails
     } finally {
       setLoading(false);

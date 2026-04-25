@@ -49,7 +49,9 @@ router.post("/user/verify-payment", authenticate, authorize(["USER"]), regContro
 router.get("/manager-stats", authenticate, authorize(["ORG_ADMIN", "EVENT_MANAGER"]), eventController.getManagerStats);
 router.get("/managed-events", authenticate, authorize(["ORG_ADMIN", "EVENT_MANAGER"]), eventController.getMyManagedEvents);
 router.get("/:eventId/registrations", authenticate, authorize(["ORG_ADMIN", "EVENT_MANAGER"]), eventController.getEventRegistrations);
-router.get("/ai-summary", authenticate, authorize(["SUPER_ADMIN", "ORG_ADMIN", "EVENT_MANAGER"]), feedbackController.generateFeedbackSummary);
+
+// FIX: Added /:eventId to the path so the router correctly captures the ID from the frontend
+router.get("/:eventId/ai-summary", authenticate, authorize(["SUPER_ADMIN", "ORG_ADMIN", "EVENT_MANAGER"]), feedbackController.generateFeedbackSummary);
 
 // --- Shared Access (Admin, Manager, Staff) ---
 router.get("/my-events", authenticate, authorize(["ORG_ADMIN", "EVENT_MANAGER", "EVENT_STAFF"]), eventController.getMyEvents);
@@ -69,6 +71,7 @@ router.get("/:eventId/sub-teams", authenticate, authorize(["ORG_ADMIN", "EVENT_M
 router.post("/sub-teams/assign", authenticate, authorize(["ORG_ADMIN", "EVENT_MANAGER"]), managerStaffCtrl.assignStaffToSubTeam); 
 router.post("/sub-teams/remove-member", authenticate, authorize(["ORG_ADMIN", "EVENT_MANAGER"]), managerStaffCtrl.removeStaffFromSubTeam);
 router.delete("/sub-teams/:subTeamId", authenticate, authorize(["ORG_ADMIN", "EVENT_MANAGER"]), managerStaffCtrl.deleteSubTeam);
+
 // ==========================================
 // 6. TASKS & KANBAN (taskController)
 // ==========================================
@@ -78,10 +81,10 @@ router.get("/:eventId/tasks", authenticate, authorize(["ORG_ADMIN", "EVENT_MANAG
 router.put("/tasks/:taskId/status", authenticate, authorize(["ORG_ADMIN", "EVENT_MANAGER", "EVENT_STAFF"]), taskController.updateTaskStatus);
 router.get("/tasks", authenticate, authorize(["ORG_ADMIN", "EVENT_MANAGER", "EVENT_STAFF"]), taskController.getAllTasks);
 router.get("/tasks/logs", authenticate, authorize(["ORG_ADMIN", "EVENT_MANAGER", "EVENT_STAFF"]), taskController.getAuditLogs);
+
 // ==========================================
 // 7. EVENT STAFF SPECIFIC ROUTES
 // ==========================================
-
 router.get("/staff-stats", authenticate, authorize(["EVENT_STAFF"]), managerStaffCtrl.getStaffStats);
 router.get("/assigned-events", authenticate, authorize(["EVENT_STAFF"]), managerStaffCtrl.getStaffAssignedEvents);
 router.get("/staff/event-team", authenticate, authorize(["EVENT_STAFF"]), managerStaffCtrl.getStaffList);

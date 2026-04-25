@@ -59,11 +59,8 @@ const fetchAttendees = async (eventId) => {
                 <th className="py-2 px-4 border-b text-left font-medium text-gray-600">Sr No.</th>
                 <th className="py-2 px-4 border-b text-left font-medium text-gray-600">Name</th>
                 <th className="py-2 px-4 border-b text-left font-medium text-gray-600">Email</th>
-<<<<<<< HEAD
-               
-=======
-                <th className="py-2 px-4 border-b text-left font-medium text-gray-600">Scanned At</th>
->>>>>>> 85b69858d036ab59462bd5a6dac002622ffe8a54
+    <th className="py-2 px-4 border-b text-left font-medium text-gray-600">Scanned At</th>
+
               </tr>
             </thead>
             <tbody>
@@ -72,11 +69,7 @@ const fetchAttendees = async (eventId) => {
                   <td className="py-2 px-4 border-b text-gray-800">{index + 1}</td>
                   <td className="py-2 px-4 border-b text-gray-800">{user.full_name}</td>
                   <td className="py-2 px-4 border-b text-gray-800">{user.email}</td>
-<<<<<<< HEAD
                  
-=======
-                  <td className="py-2 px-4 border-b text-gray-800">{new Date(user.created_at).toLocaleString()}</td>
->>>>>>> 85b69858d036ab59462bd5a6dac002622ffe8a54
                 </tr>
               ))}
             </tbody>
